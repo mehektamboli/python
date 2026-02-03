@@ -1,0 +1,100 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMs5hfJilTcZr7EhErJtJ1Y",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/mehektamboli/python/blob/main/IAI\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 5,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "S0RrOw6-T7Dr",
+        "outputId": "f7ca25dc-af0b-41de-9806-782581551ab7"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "BFS Traversal Order:\n",
+            "A B C D E \n",
+            "DFS Traversal Order:\n",
+            "A B D E C "
+          ]
+        }
+      ],
+      "source": [
+        "from collections import deque\n",
+        "\n",
+        "def bfs_city_traversal(city_map, start):\n",
+        "    visited = set()\n",
+        "    queue = deque([start])\n",
+        "\n",
+        "    print(\"BFS Traversal Order:\")\n",
+        "\n",
+        "    while queue:\n",
+        "        intersection = queue.popleft()\n",
+        "\n",
+        "        if intersection not in visited:\n",
+        "            print(intersection, end=\" \")\n",
+        "            visited.add(intersection)\n",
+        "\n",
+        "            for neighbor in city_map[intersection]:\n",
+        "                if neighbor not in visited:\n",
+        "                    queue.append(neighbor)\n",
+        "    print()  # Add a newline for readability\n",
+        "\n",
+        "def dfs_city_traversal(city_map, start, visited=None):\n",
+        "    if visited is None:\n",
+        "        visited = set()\n",
+        "\n",
+        "    print(start, end=\" \")\n",
+        "    visited.add(start)\n",
+        "\n",
+        "    for neighbor in city_map[start]:\n",
+        "        if neighbor not in visited:\n",
+        "            dfs_city_traversal(city_map, neighbor, visited)\n",
+        "\n",
+        "# Define the map before calling the functions\n",
+        "city_map = {\n",
+        "    'A': ['B', 'C'],\n",
+        "    'B': ['A', 'D', 'E'],\n",
+        "    'C': ['A'],\n",
+        "    'D': ['B'],\n",
+        "    'E': ['B']\n",
+        "}\n",
+        "\n",
+        "# Run the traversals\n",
+        "bfs_city_traversal(city_map, 'A')\n",
+        "\n",
+        "print(\"DFS Traversal Order:\")\n",
+        "dfs_city_traversal(city_map, 'A')"
+      ]
+    }
+  ]
+}
